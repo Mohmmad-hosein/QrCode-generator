@@ -4,13 +4,20 @@ import Footer from './components/Footer';
 import AboutMe from './components/AboutMe';
 import Process from './components/Process';
 import QRGenerator from './components/QRGenerator';
+import QRScanner from './components/QRScanner'; // جدید
 import BackToTop from './components/BackToTop';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
-  const [lang, setLang] = useState('fa'); // fa یا en
+  const [lang, setLang] = useState('fa');
 
-  // ذخیره تم
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const savedLang = localStorage.getItem('lang');
+    if (savedTheme) setDarkMode(savedTheme === 'dark');
+    if (savedLang) setLang(savedLang);
+  }, []);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -21,12 +28,6 @@ function App() {
     }
   }, [darkMode]);
 
-  // ذخیره زبان
-  useEffect(() => {
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang) setLang(savedLang);
-  }, []);
-
   const toggleLang = () => {
     const newLang = lang === 'fa' ? 'en' : 'fa';
     setLang(newLang);
@@ -35,14 +36,10 @@ function App() {
 
   return (
     <div className={`flex flex-col min-h-screen transition-colors duration-500 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      <Header 
-        darkMode={darkMode} 
-        setDarkMode={setDarkMode} 
-        lang={lang} 
-        toggleLang={toggleLang} 
-      />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} lang={lang} toggleLang={toggleLang} />
       <main className="flex-grow container mx-auto px-4 py-24 space-y-12">
         <QRGenerator lang={lang} darkMode={darkMode} />
+        <QRScanner lang={lang} darkMode={darkMode} /> 
         <Process lang={lang} darkMode={darkMode} />
         <AboutMe lang={lang} darkMode={darkMode} />
       </main>
