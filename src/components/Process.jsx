@@ -1,5 +1,5 @@
 import React from 'react';
-import { Type, Upload, Download } from 'lucide-react';
+import { Type, Upload, Download, Settings } from 'lucide-react';
 
 function Process({ lang, darkMode }) {
   const steps = [
@@ -14,9 +14,14 @@ function Process({ lang, darkMode }) {
       desc: lang === 'fa' ? 'در صورت نیاز تصویر آپلود کن.' : 'Upload an image if needed.',
     },
     {
+      icon: <Settings size={40} className="text-green-400" />,
+      title: lang === 'fa' ? 'تنظیمات QR' : 'QR Settings',
+      desc: lang === 'fa' ? 'سطح و تنظیمات رو تغییر بده.' : 'Adjust level and settings.',
+    },
+    {
       icon: <Download size={40} className="text-cyan-400" />,
       title: lang === 'fa' ? 'دانلود QR' : 'Download QR',
-      desc: lang === 'fa' ? 'کد QR تولید شده رو دانلود کن.' : 'Download the generated QR code.',
+      desc: lang === 'fa' ? 'کد QR رو دانلود کن.' : 'Download the generated QR code.',
     },
   ];
 
@@ -26,7 +31,7 @@ function Process({ lang, darkMode }) {
         <h2 className={`text-3xl font-bold text-center mb-8 ${darkMode ? 'text-cyan-300' : 'text-cyan-600'}`}>
           {lang === 'fa' ? 'فرایند کار' : 'How It Works'}
         </h2>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-8">  {/* حالا ۴ گام */}
           {steps.map((step, i) => (
             <div
               key={i}
@@ -43,4 +48,4 @@ function Process({ lang, darkMode }) {
   );
 }
 
-export default Process;
+export default React.memo(Process);
